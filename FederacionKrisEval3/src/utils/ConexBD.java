@@ -8,30 +8,11 @@ import java.util.Properties;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
-public class ConexBD {
-	// Datos de la conexion a la BD
-	static final String DB_URL = "jdbc:mysql://localhost:3306/bdfederacion";
-	static final String USER = "root";
-	static final String PASS = "";
+public class ConexBD {	
 
 	static Connection conexion = null;
 	Statement stmt = null;
-	PreparedStatement pstmt = null;
-
-	@SuppressWarnings("finally")
-	public static Connection establecerConexion() {
-		try {
-			System.out.println("Conectando a la Base de Datos...");
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conexion = DriverManager.getConnection(DB_URL, USER, PASS);
-		} catch (SQLException ex) {
-			System.out.println("Se ha producido una SQLException:" + ex.getMessage());
-		} catch (ClassNotFoundException ex) {
-			System.out.println("Se ha producido una ClassNotFoundException:" + ex.getMessage());
-		} finally {
-			return conexion;
-		}
-	}
+	PreparedStatement pstmt = null;	
 
 	public static Connection getCon() {
 		try {
@@ -39,8 +20,8 @@ public class ConexBD {
 				Properties properties = new Properties();
 				MysqlDataSource m = new MysqlDataSource();
 				FileInputStream fis;
-				fis = new FileInputStream("src/resources/db.properties");
-				// cargamos la informaciÃ³n del fichero properties
+				fis = new FileInputStream("src/utils/db.properties");
+				// cargamos la información del fichero properties
 				properties.load(fis);
 				// asignamos al origen de datos las propiedades leidas del fichero properties
 				m.setUrl(properties.getProperty("url"));
@@ -62,15 +43,14 @@ public class ConexBD {
 		}
 		return conexion;
 	}
-	
+
 	public static void cerrarConexion() {
-		try {
-			if (conexion != null && !conexion.isClosed()) {
+		if (conexion != null) {
+			try {
 				conexion.close();
+			} catch (SQLException ex) {
+				System.out.println("Se ha producido una SQLException:" + ex.getMessage());
 			}
-		} catch (SQLException e) {
-			System.out.println("Se ha producido una SQLException: " + e.getMessage());
-			e.printStackTrace();
 		}
 	}
 
