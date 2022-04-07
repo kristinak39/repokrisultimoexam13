@@ -4,16 +4,50 @@ import java.text.Normalizer;
 import java.text.Normalizer.Form;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import validaciones.Validaciones;
 
 /**
  *
  * @author luis
  */
-public class Utilidades {
+public class Utilidades extends Validaciones {
+	
+//Examen 10 Ej 1	
+	
+	public static LocalTime leerHora() {
+		LocalTime ret = null;
+		int hora, minuto, segundo;
+		boolean correcto = false;
+		Scanner in;
+		do {
+			System.out.println("Introduzca un valor para la hora  (0...23)");
+			in = new Scanner(System.in, "ISO-8859-1");
+			hora = in.nextInt();
+			System.out.println("Introduzca un valor para el minuto (0...59)");
+			in = new Scanner(System.in, "ISO-8859-1");
+			minuto = in.nextInt();
+			System.out.println("Introduzca un valor para los segundos (0...59)");
+			in = new Scanner(System.in, "ISO-8859-1");
+			segundo = in.nextInt();
+
+			try {
+				ret = LocalTime.of(hora, minuto, segundo);
+				correcto = true;
+			} catch (Exception e) {
+				System.out.println("Hora introducida incorrecta.");
+				correcto = false;
+			}
+		} while (!correcto);
+		return ret;
+		
+	}
+	
+	
 
 	/**
 	 * Funci√≥n que pide al usuario que introduzca 's' o 'S' para S√≠ o 'n' o 'N' para
@@ -31,12 +65,13 @@ public class Utilidades {
 		do {
 			System.out.println("Pulse s para S√≠ o n para No");
 			in = new Scanner(System.in, "ISO-8859-1");
+			in.reset();
 			resp = in.nextLine().charAt(0);
 			if (resp != 's' && resp != 'S' && resp != 'n' && resp != 'N') {
 				System.out.println("Valor introducido incorrecto.");
 			}
 		} while (resp != 's' && resp != 'S' && resp != 'n' && resp != 'N');
-		if (resp == 's' || resp != 'S') {
+		if (resp == 's' || resp == 'S') {
 			ret = true;
 		} else {
 			ret = false;
@@ -104,6 +139,7 @@ public class Utilidades {
 		return ret;
 	}
 
+	//Examen 3 Ejercicio 1
 	/**
 	 * Funci√≥n que pide al usuario que introduce un valor para una fecha a partir de
 	 * 3 enteros para el d√≠a, mes y a√±o respectivamente Y una hora a partir de ptrps
@@ -151,13 +187,16 @@ public class Utilidades {
 		return ret;
 	}
 
+	//Examen 4 Ejercicio 1
 	/**
 	 * Funci√≥n que quita los espacios en blanco del comienzo y del final de una
 	 * cadena de caracteres que se pasa como par√°metro y, adem√°s, sustituye todas
-	 * las vocales que tengan tilde por la correspondiente sin tilde, devolviendo la cadena resultante
+	 * las vocales que tengan tilde por la correspondiente sin tilde, devolviendo la
+	 * cadena resultante
 	 * 
 	 * @param s cadena original
-	 * @return cadena original sin espacios en blanco al comienzo y final de la cadena y sin vocales con tildes
+	 * @return cadena original sin espacios en blanco al comienzo y final de la
+	 *         cadena y sin vocales con tildes
 	 */
 	public static String quitarEspaciosTildes(String s) {
 		String ret = s.trim();
@@ -170,51 +209,43 @@ public class Utilidades {
 		return Normalizer.normalize(string, Form.NFC).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
 	}
 
+	//Examen 5 Ejercicio 1
 	/**
-	 * Valida que una cadena de caracteres contiene d√≠gitos √∫nicamente
-	 * 
-	 * @param tfn cadena con el telefono a validar
-	 * @return true si es un telefono v√°lido o false en caso contrario
+	 * Funci√≥n que pide al usuario que introduzca un valor decimal por la entrada
+	 * est√°ndar. Si el formato introducido no es correcto o fuera de rango, o si se
+	 * produce cualquier otra excepci√≥n, avisa al usuario y le vuelve a pedir que lo
+	 * introduzca de nuevo un valor.
+	 *
+	 * @return el valor float introducido por el usuario
 	 */
-	public static boolean validarTelefono(String tfn) {
-		return tfn.trim().chars().allMatch(Character::isDigit);
-	}
-
-	/**
-	 * Valida que una cadena de caracteres contiene letras o espacios √∫nicamente,
-	 * longitud entre 3 y 50 caractreres
-	 * 
-	 * @param nombre cadena con el nombre a validar
-	 * @return true si es un nombre v√°lido o false en caso contrario
-	 */
-	public static boolean validarNombre(String nombre) {
-		// regEx general para cadena de caracteres con longitud entre 1 y 50 caracteres,
-		// aceptando d√≠gitos, letras MAYUS y min√∫sculas, con tildes, dir√©resis y
-		// diferentes s√≠mbolos especiales
-		// Pattern patron = Pattern.compile("[
-	
-		Pattern patron = Pattern.compile("[ A-Za-zÒ—·ÈÌÛ˙¡…Õ”⁄‰ÎÔˆ¸ƒÀœ÷‹-]{3,50}");
-		Matcher comprobacion = patron.matcher(nombre);
-		return comprobacion.matches();//
-	}
-	
 	public static float leerFloat() {
-		float ret = 0.0F;
-		boolean validar = false;
+		double ret = 0.0;
+		boolean correcto = false;
 		Scanner in;
 		do {
-			System.out.println("Introduzca un valor decimal, por favor (xx.xx)");
+			System.out.println("Introduzca un valor decimal en formato xx,xx ");
 			in = new Scanner(System.in, "ISO-8859-1");
 			try {
-				ret = in.nextFloat();
-				validar = true;
-			} catch (InputMismatchException ime) {
-				System.out.println("Formato introducido incorrecto.");
-				validar = false;
+				ret = in.nextDouble();
+				correcto = true;
+			} catch (InputMismatchException e1) {
+				System.out.println("Formato introducido incorrecto o valor fuera de rango." + e1.getMessage());
+				e1.printStackTrace();
+				correcto = false;
+			} catch (NoSuchElementException e2) {
+				System.out.println("ERROR: the input is exhausted: " + e2.getMessage());
+				e2.printStackTrace();
+				correcto = false;
+			} catch (IllegalStateException e3) {
+				System.out.println("ERROR: this scanner is closed:" + e3.getMessage());
+				e3.printStackTrace();
+				correcto = false;
+			} catch (Exception e) {
+				System.out.println("ERROR: Se ha producido una excepci√≥n: " + e.getMessage());
+				e.printStackTrace();
+				correcto = false;
 			}
-		} while (!validar);
-		return ret;
+		} while (!correcto);
+		return Float.parseFloat("" + ret);
 	}
-		
-	}
-
+}
