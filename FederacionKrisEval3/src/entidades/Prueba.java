@@ -8,7 +8,7 @@ import java.util.Scanner;
 import utils.Utilidades;
 import validaciones.Validaciones;
 
-public class Prueba {
+public class Prueba implements Comparable<Prueba>{
 	private long id;
 	private String nombre;
 	private LocalDate fecha; // solo fecha
@@ -318,6 +318,24 @@ public class Prueba {
 //ejercicio 3 examen 10
 		ret = new Prueba(id, nombre, fecha, lugar, ind, patrocinador);
 		return ret;
+	}
+
+	@Override
+	public int compareTo(Prueba o) {
+		// TODO Auto-generated method stub
+		int resultado = this.getFecha().compareTo(o.getFecha());
+		if(resultado == 0) {
+			if(isIndividual() != o.isIndividual()) {
+				if(isIndividual()) resultado = -1;
+				else resultado = 1;
+			}
+			else resultado = 0;
+			if(resultado == 0) {
+				resultado = this.getNombre().compareTo(o.getNombre());
+			}
+			
+		}
+		return resultado;
 	}
 
 }

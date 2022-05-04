@@ -128,5 +128,8 @@ public class Competicion {
 		ret = new Competicion(id, nombre, anio, pruebas);
 		return ret;
 	}
+	
+	
+	
 
 }

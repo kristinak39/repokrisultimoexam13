@@ -154,6 +154,7 @@ public class Patrocinador implements Comparable<Patrocinador>{
 				System.out.println("ERROR: El valor introducido para la direccion web no es valido.");
 		} while (!valido);
 		
+		
 		valido = false;
 		do {
 			in = new Scanner(System.in);
@@ -187,10 +188,8 @@ public class Patrocinador implements Comparable<Patrocinador>{
 		}
 		return resultado;
 	}
-
-
-
 	
+
 	
 	
 }
