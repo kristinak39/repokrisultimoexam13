@@ -6,22 +6,42 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
 
-public class ConexBD {	
+//import com.mysql.cj.jdbc.MysqlDataSource;
 
-	static Connection conexion = null;
-	Statement stmt = null;
-	PreparedStatement pstmt = null;	
+public class ConexBD {
+	// Datos de la conexion a la BD
+	private static final String DB_URL = "jdbc:mysql://localhost:3306/bdfederacion";
+	private static final String USER = "root";
+	private static final String PASS = "";
+
+	private static Connection conexion = null;
+
+	@SuppressWarnings("finally")
+	public static Connection establecerConexion() {
+		try {
+			if (conexion == null || conexion.isClosed()) {
+				System.out.println("Conectando a la Base de Datos...");
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				conexion = DriverManager.getConnection(DB_URL, USER, PASS);
+			}
+		} catch (SQLException ex) {
+			System.out.println("Se ha producido una SQLException:" + ex.getMessage());
+		} catch (ClassNotFoundException ex) {
+			System.out.println("Se ha producido una ClassNotFoundException:" + ex.getMessage());
+		} finally {
+			return conexion;
+		}
+	}
 
 	public static Connection getCon() {
 		try {
-			if (conexion == null) {
+			if (conexion == null || conexion.isClosed()) {
 				Properties properties = new Properties();
 				MysqlDataSource m = new MysqlDataSource();
 				FileInputStream fis;
-				fis = new FileInputStream("src/utils/db.properties");
-				// cargamos la información del fichero properties
+				fis = new FileInputStream("src/resources/db.properties");
+				// cargamos la informaciÃ³n del fichero properties
 				properties.load(fis);
 				// asignamos al origen de datos las propiedades leidas del fichero properties
 				m.setUrl(properties.getProperty("url"));
@@ -45,12 +65,13 @@ public class ConexBD {
 	}
 
 	public static void cerrarConexion() {
-		if (conexion != null) {
-			try {
+		try {
+			if (conexion != null && !conexion.isClosed()) {
 				conexion.close();
-			} catch (SQLException ex) {
-				System.out.println("Se ha producido una SQLException:" + ex.getMessage());
 			}
+		} catch (SQLException e) {
+			System.out.println("Se ha producido una SQLException: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 

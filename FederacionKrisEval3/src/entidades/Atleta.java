@@ -1,17 +1,20 @@
 package entidades;
 
+import java.io.Serializable;
 import java.util.Scanner;
-
 import utils.Datos;
 import utils.Utilidades;
 import validaciones.Validaciones;
 
-public class Atleta extends Participante {
+public class Atleta extends Participante implements Serializable{
 	private long idAtleta;
 	private float altura;
 	private float peso;
 
 	private DatosPersona persona;
+
+	public Atleta() {
+	}
 
 	public Atleta(long id, int dorsal, char calle, long idAtleta, float altura, float peso) {
 		super(id, dorsal, calle);
@@ -45,16 +48,6 @@ public class Atleta extends Participante {
 		this.persona = Datos.buscarPersonaPorId(a.idAtleta);
 	}
 
-	@Override
-	public long getId() {
-		return idAtleta;
-	}
-
-	@Override
-	public void setId(long id) {
-		this.idAtleta = id;
-	}
-
 	public float getAltura() {
 		return altura;
 	}
@@ -75,19 +68,31 @@ public class Atleta extends Participante {
 		return this.persona;
 	}
 
+	public void setPersona(DatosPersona persona) {
+		this.persona = persona;
+	}
+	
+	public long getIdAtleta() {
+		return idAtleta;
+	}
+
+	public void setIdAtleta(long idAtleta) {
+		this.idAtleta = idAtleta;
+	}
+
+
 	// Examen 5 Ejercicio 5
 	/***
-	 * Funci√≥n que pregunta al usuario por cada uno de los campos para un nuevo
+	 * FunciÛn que pregunta al usuario por cada uno de los campos para un nuevo
 	 * Atleta, los valida y si son correctos devuelve un objeto Atleta completo
 	 * 
-	 * @return un objeto Atleta completo v√°lido o null si hubo alg√∫n error
+	 * @return un objeto Atleta completo v·lido o null si hubo alg˙n error
 	 */
 	public static Atleta nuevoAtleta() {
 		Atleta ret = null;
 		long id = -1;
 		float altura = 0.0F;
 		float peso = 0.0F;
-		int elecc = -1;
 		DatosPersona dp = null;
 		Scanner in;
 		boolean valido = false;
@@ -107,7 +112,7 @@ public class Atleta extends Participante {
 			peso = Utilidades.leerFloat();
 			valido = Validaciones.validarPeso(peso);
 			if (!valido)
-				System.out.println("ERROR: El valor introducido para el peso no es v√°lido.");
+				System.out.println("ERROR: El valor introducido para el peso no es v·lido.");
 		} while (!valido);
 
 		valido = false;
@@ -116,7 +121,7 @@ public class Atleta extends Participante {
 			altura = Utilidades.leerFloat();
 			valido = Validaciones.validarAltura(altura);
 			if (!valido)
-				System.out.println("ERROR: El valor introducido para la altura no es v√°lido.");
+				System.out.println("ERROR: El valor introducido para la altura no es v·lido.");
 		} while (!valido);
 
 		System.out.println("Introduzca ahora los datos personales:");
@@ -128,14 +133,26 @@ public class Atleta extends Participante {
 	}
 
 	/***
-	 * Funci√≥n que devuelve una cadena de caracteres con los datos del atleta con el
-	 * siguiente formato: <nombre> ‚Äú (‚Äù <documentacion> ‚Äù) del a√±o
-	 * ‚Äù<fechaNac.a√±o>‚Äô\t‚Äô<peso>‚ÄùKgs. ‚Äù<altura>‚Äùm.‚Äú
+	 * FunciÛn que devuelve una cadena de caracteres con los datos del atleta con el
+	 * siguiente formato: <nombre> ì (î <documentacion> î) del aÒo
+	 * î<fechaNac.aÒo>í\tí<peso>îKgs. î<altura>îm.ì
 	 */
 	@Override
 	public String toString() {
-		return "" + persona.getNombre() + " (" + persona.getNifnie().mostrar() + ") del a√±o "
+		return "" + persona.getNombre() + " (" + persona.getNifnie().mostrar() + ") del aÒo "
 				+ persona.getFechaNac().getYear() + "\t" + peso + "Kgs. " + altura + "m.";
 	}
+
+	public int getIdEquipo() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public void setIdEquipo(long idEquipo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 
 }

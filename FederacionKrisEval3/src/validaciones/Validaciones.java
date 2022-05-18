@@ -1,6 +1,8 @@
 package validaciones;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -8,45 +10,46 @@ import com.aeat.valida.Validador;
 
 import entidades.NIE;
 import entidades.NIF;
+import entidades.Tiempo;
 
 //Examen 5 Ejercicio 3
 public class Validaciones {
 
 	/**
-	 * Valida que una cadena de caracteres contiene dígitos únicamente
+	 * Valida que una cadena de caracteres contiene dÃ­gitos Ãºnicamente
 	 * 
 	 * @param tfn cadena con el telefono a validar
-	 * @return true si es un telefono válido o false en caso contrario
+	 * @return true si es un telefono vÃ¡lido o false en caso contrario
 	 */
 	public static boolean validarTelefono(String tfn) {
 		return tfn.trim().chars().allMatch(Character::isDigit);
 	}
 
 	/**
-	 * Valida que una cadena de caracteres contiene letras o espacios únicamente,
+	 * Valida que una cadena de caracteres contiene letras o espacios Ãºnicamente,
 	 * longitud entre 3 y 50 caractreres
 	 * 
 	 * @param nombre cadena con el nombre a validar
-	 * @return true si es un nombre válido o false en caso contrario
+	 * @return true si es un nombre vÃ¡lido o false en caso contrario
 	 */
 	public static boolean validarNombre(String nombre) {
 		// regEx general para cadena de caracteres con longitud entre 1 y 50 caracteres,
-		// aceptando dígitos, letras MAYUS y minúsculas, con tildes, diréresis y
-		// diferentes símbolos especiales
+		// aceptando dÃ­gitos, letras MAYUS y minÃºsculas, con tildes, dirÃ©resis y
+		// diferentes sÃ­mbolos especiales
 		// Pattern patron = Pattern.compile("[
-		// 0-9A-Za-zñÑáéíóúÁÉÍÓÚäëïöüÄËÏÖÜ¡!¿?@#$%()=+-€/.,]{1,50}");
-		Pattern patron = Pattern.compile("[ A-Za-zñÑáéíóúÁÉÍÓÚäëïöüÄËÏÖÜ-]{3,50}");
+		// 0-9A-Za-zÃ±Ã‘Ã¡Ã©Ã­Ã³ÃºÃÃ‰ÃÃ“ÃšÃ¤Ã«Ã¯Ã¶Ã¼Ã„Ã‹ÃÃ–ÃœÂ¡!Â¿?@#$%()=+-â‚¬/.,]{1,50}");
+		Pattern patron = Pattern.compile("[ A-Za-zÃ±Ã‘Ã¡Ã©Ã­Ã³ÃºÃÃ‰ÃÃ“ÃšÃ¤Ã«Ã¯Ã¶Ã¼Ã„Ã‹ÃÃ–Ãœ-]{3,50}");
 		Matcher comprobacion = patron.matcher(nombre);
 		return comprobacion.matches();//
 	}
 
 	/**
 	 * 
-	 * Funcion que valida si una cadena de caracteres que se pasa como parámetro
-	 * tiene un NIF válido.
+	 * Funcion que valida si una cadena de caracteres que se pasa como parÃ¡metro
+	 * tiene un NIF vÃ¡lido.
 	 * 
 	 * @param nif cadena con el NIF a validar
-	 * @return true si la cadena nif es un NIF válido o false en caso contrario
+	 * @return true si la cadena nif es un NIF vÃ¡lido o false en caso contrario
 	 */
 	public static boolean validarNIF(String nif) {
 		boolean ret = false;
@@ -61,10 +64,10 @@ public class Validaciones {
 	}
 
 	/**
-	 * Función que valida un objeto NIF
+	 * FunciÃ³n que valida un objeto NIF
 	 * 
 	 * @param nif objeto NIF que se va a validar
-	 * @return true si el NIF pasado como parámetro es válido o false en caso
+	 * @return true si el NIF pasado como parÃ¡metro es vÃ¡lido o false en caso
 	 *         contrario
 	 */
 	public static boolean validarNIF(NIF nif) {
@@ -80,11 +83,11 @@ public class Validaciones {
 	}
 
 	/**
-	 * Funcion que valida si una cadena de caracteres que se pasa como parámetro
-	 * tiene un NIE válido.
+	 * Funcion que valida si una cadena de caracteres que se pasa como parÃ¡metro
+	 * tiene un NIE vÃ¡lido.
 	 * 
 	 * @param nie cadena con el NIE a validar
-	 * @return true si la cadena nie es un NIE válido o false en caso contrario
+	 * @return true si la cadena nie es un NIE vÃ¡lido o false en caso contrario
 	 */
 	public static boolean validarNIE(String nie) {
 		boolean esValido = false;
@@ -125,10 +128,10 @@ public class Validaciones {
 	}
 
 	/**
-	 * Función que valida un objeto NIE
+	 * FunciÃ³n que valida un objeto NIE
 	 * 
 	 * @param nie objeto NIE que se va a validar
-	 * @return true si el NIE pasado como parámetro es válido o false en caso
+	 * @return true si el NIE pasado como parÃ¡metro es vÃ¡lido o false en caso
 	 *         contrario
 	 */
 	public static boolean validarNIE(NIE nie) {
@@ -148,17 +151,17 @@ public class Validaciones {
 	}
 
 	/**
-	 * Función que valida un valor flotante para la pureza (en %)
+	 * FunciÃ³n que valida un valor flotante para la pureza (en %)
 	 * 
 	 * @param pureza valor flotante de la pureza para validar
-	 * @return true si es valor válido (entre 0,0 y 100,0) o false en caso contrario
+	 * @return true si es valor vÃ¡lido (entre 0,0 y 100,0) o false en caso contrario
 	 */
 	public static boolean validarPureza(float pureza) {
 		return (pureza >= 0.0F && pureza <= 100.0F);
 	}
 
 	public static boolean validarFecha(LocalDate fechaMin) {
-		// TODO Esbozo de método generado automáticamente
+		// TODO Esbozo de mÃ©todo generado automÃ¡ticamente
 		return true;
 	}
 
@@ -169,13 +172,155 @@ public class Validaciones {
 	public static boolean validarAnio(int anio) {
 		return (anio > 0);
 	}
-	
+
 	public static boolean validarNombreEquipo(String nombre) {
-		return false; //TO-DO
+		return true; // TODO
 	}
 
-	public static boolean validarWeb(String web) {
-		// TODO Auto-generated method stub
-		return false;
+	/// Examen 10 ejercicio 2
+	/***
+	 * Funcion que valida el telÃ©fono profesional de un responsable de un
+	 * patrocinador, que es una cadena de caracteres de 9 o 10 dÃ­gitos.
+	 * 
+	 * @param tfnProf la cadena con el telefono profesional a validar
+	 * @return true si la cadena que se pasa como parametro es vÃ¡lida o false en
+	 *         caso contrario
+	 */
+	public static boolean validarTelefonoProf(String tfnProf) {
+		boolean ret = false;
+		ret = tfnProf.trim().chars().allMatch(Character::isDigit) && (tfnProf.length() == 9 || tfnProf.length() == 10);
+		return ret;
 	}
+
+	/***
+	 * Funcion que valida la franja horaria de un responsable de un patrocinador
+	 * 
+	 * @param horaini hora de inicio de la franja horaria a validar
+	 * @param horafin hora de fin de la franja horaria a validar
+	 * @return true si la franja horaria se pasa como parametro es vÃ¡lida o false en
+	 *         caso contrario
+	 */
+	public static boolean validarRangoHorario(LocalTime horaini, LocalTime horafin) {
+		return horaini.isBefore(horafin);
+	}
+
+	/***
+	 * Funcion que valida un nombre para un patrocinador: ha de ser Ãºnico (que no se
+	 * puede repetir), y conformado por una cadena de caracteres de entre 3 y 150
+	 * caracteres, siendo vÃ¡lidos los alfabÃ©ticos (letras) o numÃ©ricos (dÃ­gitos)
+	 * solamente
+	 * 
+	 * @param nombre con el nombre del patrocinador a validar
+	 * @return true si el nombre que se pasa como parametro es vÃ¡lido para un
+	 *         patrocinador o false en caso contrario
+	 */
+	public static boolean validarNombrePatrocinador(String nombre) {
+		Pattern patron = Pattern.compile("[ A-Za-zÃ±Ã‘Ã¡Ã©Ã­Ã³ÃºÃÃ‰ÃÃ“ÃšÃ¤Ã«Ã¯Ã¶Ã¼Ã„Ã‹ÃÃ–Ãœ0123456789-]{3,150}");
+		Matcher comprobacion = patron.matcher(nombre);
+		return comprobacion.matches();
+	}
+
+	/***
+	 * Funcion que valida la dotacion aportada por un patrocinador: ha de ser mayor
+	 * de 100 euros y con 2 decimales como mucho (cÃ©ntimos)
+	 * 
+	 * @param dotacion valor double con la dotacion a validar
+	 * @return true si la dotacion que se pasa como parametro es vÃ¡lido para un
+	 *         patrocinador o false en caso contrario
+	 */
+	public static boolean validarDotacion(double dotacion) {
+		boolean aux = (dotacion * 1000) % 10 > 0;
+		if (aux)
+			return false;
+		return (dotacion >= 100.00);
+	}
+
+	public static boolean validarWebPatrocinador(String web) {
+		if (web.length() < 3 || web.length() > 150)
+			return false;
+		else
+			return true;
+	}
+
+	public static boolean validarHoras(int h) {
+		return (h >= 0);
+	}
+
+	public static boolean validarMinutos(int m) {
+		return (m >= 0 && m <= 59);
+	}
+
+	public static boolean validarSegundos(int s) {
+		return (s >= 0 && s <= 59);
+	}
+
+	public static boolean validarCentesimas(int c) {
+		return (c >= 0 && c <= 99);
+	}
+
+	/***
+	 * funcion que valida si un Tiempo es mayor que 00h 00m 00,00s
+	 * 
+	 * @param t
+	 * @return
+	 */
+	public static boolean validarTiempo(Tiempo t) {
+		boolean ret = false;
+		if (!validarHoras(t.getHoras()))
+			return false;
+		if (!validarMinutos(t.getMinutos()))
+			return false;
+		if (!validarSegundos(t.getSegundos()))
+			return false;
+		if (!validarCentesimas(t.getCentesimas()))
+			return false;
+
+		if (t.getHoras() == 0)
+			if (t.getMinutos() == 0)
+				if (t.getSegundos() == 0)
+					if (t.getCentesimas() == 0)
+						ret = false;
+
+		return true;
+	}
+
+	public static boolean validarMotivoPenalizacion(String otros) {
+		return (!otros.equals("") && otros.length() <= 500);
+	}
+
+	public static boolean validarDorsal(int dorsal) {
+		return (dorsal >= 1 && dorsal <= 150);
+	}
+
+	public static boolean validarCalle(char calle) {
+		try {
+			return Character.isLetter(calle);
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public static boolean validarNombrePrueba(String nombre) {
+		Pattern patron = Pattern.compile("[ A-Za-zÃ±Ã‘Ã¡Ã©Ã­Ã³ÃºÃÃ‰ÃÃ“ÃšÃ¤Ã«Ã¯Ã¶Ã¼Ã„Ã‹ÃÃ–Ãœ0123456789-]{5,150}");
+		Matcher comprobacion = patron.matcher(nombre);
+		return comprobacion.matches();
+	}
+
+	/***
+	 * Valida que la fecha que se pasa como argumento sea posterior al dia actual + 1 mes
+	 * @param fecha
+	 * @return true si la fecha es posterior a hoy +1 mes o false en caso contrario
+	 */
+	public static boolean validarFechaNuevaPrueba(Date fecha) {
+		LocalDate hoyMas1MesLD = LocalDate.now().plusMonths(1);
+		java.util.Date hoyMas1Mes = new Date(hoyMas1MesLD.getYear() - 1900, hoyMas1MesLD.getMonthValue() - 1, hoyMas1MesLD.getDayOfMonth());
+		return fecha.after(hoyMas1Mes);
+		
+	}
+
+	public static boolean validarFechaNuevoAtleta(Date fecha) {
+		Date min = new Date(1960-1900, 1, 1);
+		return fecha.after(min);
+	}
+
 }

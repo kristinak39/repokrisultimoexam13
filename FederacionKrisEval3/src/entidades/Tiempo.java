@@ -113,6 +113,12 @@ package entidades;
 				}
 			}
 			return resultado;
+		}
+
+
+		public int getCentesimas() {
+			// TODO Auto-generated method stub
+			return 0;
 		} 
 		
 		

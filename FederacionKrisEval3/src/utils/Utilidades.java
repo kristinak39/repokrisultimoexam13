@@ -1,5 +1,6 @@
 package utils;
 
+import java.text.DecimalFormat;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
 import java.time.LocalDate;
@@ -9,6 +10,7 @@ import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import entidades.Tiempo;
 import validaciones.Validaciones;
 
 /**
@@ -16,38 +18,6 @@ import validaciones.Validaciones;
  * @author luis
  */
 public class Utilidades extends Validaciones {
-	
-//Examen 10 Ej 1	
-	
-	public static LocalTime leerHora() {
-		LocalTime ret = null;
-		int hora, minuto, segundo;
-		boolean correcto = false;
-		Scanner in;
-		do {
-			System.out.println("Introduzca un valor para la hora  (0...23)");
-			in = new Scanner(System.in, "ISO-8859-1");
-			hora = in.nextInt();
-			System.out.println("Introduzca un valor para el minuto (0...59)");
-			in = new Scanner(System.in, "ISO-8859-1");
-			minuto = in.nextInt();
-			System.out.println("Introduzca un valor para los segundos (0...59)");
-			in = new Scanner(System.in, "ISO-8859-1");
-			segundo = in.nextInt();
-
-			try {
-				ret = LocalTime.of(hora, minuto, segundo);
-				correcto = true;
-			} catch (Exception e) {
-				System.out.println("Hora introducida incorrecta.");
-				correcto = false;
-			}
-		} while (!correcto);
-		return ret;
-		
-	}
-	
-	
 
 	/**
 	 * FunciÃ³n que pide al usuario que introduzca 's' o 'S' para SÃ­ o 'n' o 'N' para
@@ -91,7 +61,7 @@ public class Utilidades extends Validaciones {
 		boolean correcto = false;
 		Scanner in;
 		do {
-			System.out.println("Introduzca un valor decimal (xx.xx)");
+			System.out.println("Introduzca un valor decimal (xx,xx)");
 			in = new Scanner(System.in, "ISO-8859-1");
 			try {
 				ret = in.nextDouble();
@@ -139,7 +109,7 @@ public class Utilidades extends Validaciones {
 		return ret;
 	}
 
-	//Examen 3 Ejercicio 1
+	// Examen 3 Ejercicio 1
 	/**
 	 * FunciÃ³n que pide al usuario que introduce un valor para una fecha a partir de
 	 * 3 enteros para el dÃ­a, mes y aÃ±o respectivamente Y una hora a partir de ptrps
@@ -187,7 +157,44 @@ public class Utilidades extends Validaciones {
 		return ret;
 	}
 
-	//Examen 4 Ejercicio 1
+	/// Examen 10 Ejercicio 1
+	/**
+	 * FunciÃ³n que pide al usuario que introduce un valor para una hora a partir de
+	 * 3 enteros para la hora del dica, minuto y segundo respectivamente. Si los
+	 * valores introducidos no producen una hora correcta, avisa al usuario y le
+	 * pide que los introduzca de nuevo. Si no lo consigue, devolverÃ¡ null
+	 *
+	 * @return una hora de la clase java.time.LocalTime o null si hay error
+	 */
+	public static java.time.LocalTime leerHora() {
+		java.time.LocalTime ret = null;
+		int hora, minuto, segundo;
+		boolean correcto = false;
+		Scanner in;
+		do {
+			try {
+				System.out.println("Introduzca un valor para la hora del dia (0...23)");
+				in = new Scanner(System.in, "ISO-8859-1");
+				hora = in.nextInt();
+				System.out.println("Introduzca un valor para el minuto (0...59)");
+				in = new Scanner(System.in, "ISO-8859-1");
+				minuto = in.nextInt();
+				System.out.println("Introduzca un valor para el segundo");
+				in = new Scanner(System.in, "ISO-8859-1");
+				segundo = in.nextInt();
+
+				ret = LocalTime.of(hora, minuto, segundo);
+				correcto = true;
+			} catch (Exception e) {
+				System.out.println(
+						"Hora introducida incorrecta. Primero ingrese la hora, luego el minuto y finalmente el segundo.");
+				correcto = false;
+			}
+		} while (!correcto);
+		return ret;
+	}
+
+	// Examen 4 Ejercicio 1
 	/**
 	 * FunciÃ³n que quita los espacios en blanco del comienzo y del final de una
 	 * cadena de caracteres que se pasa como parÃ¡metro y, ademÃ¡s, sustituye todas
@@ -200,8 +207,8 @@ public class Utilidades extends Validaciones {
 	 */
 	public static String quitarEspaciosTildes(String s) {
 		String ret = s.trim();
-		return ret.replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u')
-				.replace('Á', 'A').replace('É', 'E').replace('Í', 'I').replace('Ó', 'O').replace('Ú', 'U');
+		return ret.replace('A', 'a').replace('E', 'e').replace('I', 'i').replace('O', 'o').replace('U', 'u')
+				.replace('Á', 'a').replace('É', 'é').replace('Í', 'i').replace('Ó', 'ó').replace('Ú', 'ú');
 	}
 
 	public static String removeDiacriticalMarks(String string) {
@@ -209,7 +216,7 @@ public class Utilidades extends Validaciones {
 		return Normalizer.normalize(string, Form.NFC).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
 	}
 
-	//Examen 5 Ejercicio 1
+	// Examen 5 Ejercicio 1
 	/**
 	 * FunciÃ³n que pide al usuario que introduzca un valor decimal por la entrada
 	 * estÃ¡ndar. Si el formato introducido no es correcto o fuera de rango, o si se
@@ -248,4 +255,82 @@ public class Utilidades extends Validaciones {
 		} while (!correcto);
 		return Float.parseFloat("" + ret);
 	}
+
+	/***
+	 * Funcion que se le pasa un valor double y devuelve su cadena de caracteres
+	 * asociada con 2 decimales Ãºnicamente
+	 * 
+	 * @param valor
+	 * @return
+	 */
+	public static String mostrarDouble2Decimales(double valor) {
+		DecimalFormat df = new DecimalFormat("#.##");
+		return df.format(valor);
+	}
+
+	/***
+	 * Funcion que devuelve un valor real(double o float) con el nÂº de decimales que
+	 * se quiera, pasando ambos adatos como parÃ¡metros a la funciÃ³n
+	 * 
+	 * @param numero          el valor real con decimales
+	 * @param numeroDecimales el nÂº de decimales que deseamos
+	 * @return el valor del primer argumento redondeado al nÂº de decimales que
+	 *         marque el segundo argumento
+	 */
+	public static Double formatearDecimales(Double numero, Integer numeroDecimales) {
+		return Math.round(numero * Math.pow(10, numeroDecimales)) / Math.pow(10, numeroDecimales);
+	}
+
+
+
+	public static int convertirAEntero(String aux) {
+		int ret = -1;
+		try {
+			ret = Integer.valueOf(aux);
+		} catch (Exception e) {
+			System.out.println("ERROR: Problema al tomar el valor del entero.");
+		}
+
+		return ret;
+	}
+
+	/**
+	 * Funcion que redondea un Tiempo de forma que un valor >50 en las centÃ©simas
+	 * incremente el valor de los segundos en 1 unidad (y luego siempre establecer a
+	 * 0 las centÃ©simas).
+	 * 
+	 * @param t
+	 * @return
+	 */
+	public static Tiempo redondearCentesimas(Tiempo t) {
+		Tiempo ret = new Tiempo();
+		if (t.getCentesimas() > 50) {
+			ret.setCentesimasSegundo(0);
+			ret.setSegundos(t.getSegundos() + 1);
+			if (ret.getSegundos() == 60) {
+				ret.setSegundos(0);
+				ret.setMinutos(t.getMinutos() + 1);
+			} else
+				ret.setMinutos(t.getMinutos());
+			if (ret.getMinutos() == 60) {
+				ret.setMinutos(0);
+				ret.setHoras(t.getHoras() + 1);
+			} else
+				ret.setHoras(t.getHoras());
+		} else {
+			ret.setHoras(t.getHoras());
+			ret.setMinutos(t.getMinutos());
+			ret.setSegundos(t.getSegundos());
+			ret.setCentesimasSegundo(0);
+		}
+
+		return ret;
+	}
+
+	public static String mostrarDouble1Decimal(double valor) {
+		DecimalFormat df = new DecimalFormat("#.#");
+		return df.format(valor);
+	}
+
+
 }

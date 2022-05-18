@@ -38,7 +38,7 @@ public class Patrocinador implements Comparable<Patrocinador>{
 
 
 //apartado C ej 3 examen 10
-	private String mostrarBasico() {
+	public String mostrarBasico() {
 		String ret = null;
 		
 		return "Id: "+getId()+ " Nombre: " + getNombre() + " Web: "+ getWeb();
@@ -149,7 +149,7 @@ public class Patrocinador implements Comparable<Patrocinador>{
 			in = new Scanner(System.in);
 			System.out.println("Introduzca la direccion web del nuevo Patrocinador:");
 			web = in.next();
-			valido = Validaciones.validarWeb(web);
+			//valido = Validaciones.validarAltura(web);
 			if (!valido)
 				System.out.println("ERROR: El valor introducido para la direccion web no es valido.");
 		} while (!valido);

@@ -57,6 +57,9 @@ public class Responsable extends DatosPersona{
 	}
 
 
+	
+
+
 	public long getId() {
 		return id;
 	}
@@ -206,6 +209,18 @@ public class Responsable extends DatosPersona{
 		} catch (Exception e) {
 			System.out.println("Se ha producido una Exception" + e.getMessage());
 		}
+	}
+
+
+	public Responsable getPersona() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public void setPersona(DatosPersona buscarPersonaPorId) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
